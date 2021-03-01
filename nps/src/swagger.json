@@ -1,0 +1,311 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "NPS API",
+      "description": "An API for calculate surveys NPS.",
+      "version": "1.0.0"
+    },
+    "host": "localhost:3333",
+    "basePath": "",
+    "schemes": [
+      "http"
+    ],
+    "paths": {
+      "/users": {
+        "post": {
+          "summary": "Create a new user.",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "user",
+              "description": "The user to create.",
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name","email"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "A user object.",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "uuid",
+                    "example": "761c79cb-c102-4837-a930-931e7c6152bc"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Gabriel Sacoman"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "sacoman@example.com"
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "example": "2021-02-28T13:54:47.000Z"
+                  }
+                }
+              }
+            },
+            "400": {
+                "description": "A object with the error data, errors array and the data sent."
+              }
+          }
+        }
+      },
+      "/surveys": {
+        "get": {
+            "summary": "Return all the surveys.",
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                "description": "A array of objects with all the surveys.",
+                "schema": {
+                  "type": "array",
+                  "example":[ 
+                        {
+                            "id": "dfa0dfb8-8e4e-466e-8772-1f394bb7e9ad",
+                            "title": "We'd like to hear from you!",
+                            "description": "From 0 to 10, how much would recommend our services?",
+                            "created_at": "2021-02-26T14:15:45.000Z"
+                        }
+                  ]
+                }
+              }
+            }
+          },
+        "post": {
+          "summary": "Create a new survey.",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "survey",
+              "description": "The survey to create.",
+              "schema": {
+                "type": "object",
+                "required": [
+                  "title","description"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "We'd like to hear from you!"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "From 0 to 10, how much would recommend our services?"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+                "description": "A User object",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "af4ad5f9-c778-40de-b4a5-68a7678e4b73"
+                    },
+                    "title": {
+                      "type": "string",
+                      "example": "We'd like to hear from you!"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "From 0 to 10, how much would recommend our services?"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "example": "2021-02-24T15:06:59.000Z"
+                    }
+                  }
+                }
+            }
+          }
+        }
+      },
+      "/sendMail": {
+        "post": {
+          "summary": "Send an e-mail with a survey for the client.",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "user",
+              "description": "An e-mail with the survey to be sended.",
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email","survey_id"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "giuliano@gmail.com"
+                  },
+                  "survey_id": {
+                    "type": "string",
+                    "example": "dfa0dfb8-8e4e-466e-8772-1f394bb7e9ad"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "A userSurvey object.",
+              "schema": {
+                "type": "object",
+                "properties": {
+                    "id": { "type":"string","example": "b09dc331-87e0-46f1-8b23-664b34f70210"},
+                    "user_id": { "type":"string","example": "11b40fa6-f08e-4ba4-af42-2bfd295cc8af"},
+                    "survey_id": { "type":"string","example": "dfa0dfb8-8e4e-466e-8772-1f394bb7e9ad"},
+                    "value": {"type":"integer", "example": "0"},
+                    "created_at": { "type":"string","example": "2021-02-28T14:59:45.000Z"},
+                    "user": {
+                      "type": "object",
+                      "example": {
+                        "id": "11b40fa6-f08e-4ba4-af42-2bfd295cc8af",
+                        "name": "Giuliano",
+                        "email": "giuliano@gmail.com",
+                        "created_at": "2021-02-26T14:15:29.000Z"
+                      }
+                    },
+                    "survey": {
+                      "type": "object",
+                      "example": {
+                        "id": "dfa0dfb8-8e4e-466e-8772-1f394bb7e9ad",
+                        "title": "We'd like to hear from you!",
+                        "description": "From 0 to 10, how much would recommend our services?",
+                        "created_at": "2021-02-26T14:15:45.000Z"
+                      }
+                    }
+                }
+              }
+            },
+            "400": {
+                "description": "A object with the error message.",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "message": {"type":"string", "example":"User does not exists!"}
+                    }
+                }
+              }
+          }
+        }
+      },
+      "/answers/{value}": {
+        "get": {
+          "summary": "Return a surveyUser object with the rating value.",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "value",
+              "description": "The rating value.",
+              "type": "integer"
+            },
+            {
+                "in": "query",
+                "name": "u",
+                "description": "The userSurvey ID.",
+                "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "A userSurvey object with the rating value.",
+              "schema": {
+                "type": "object",
+                "properties": {
+                    "id": {"type":"string","example": "354a6af2-ba1f-4d9f-97a2-f26bd45dcc7f"},
+                    "user_id": {"type":"string","example": "80d4d80a-e3d4-40a5-b26a-8145d10f8d59"},
+                    "survey_id": {"type":"string","example": "dfa0dfb8-8e4e-466e-8772-1f394bb7e9ad"},
+                    "value": {"type":"integer","example": "10"},
+                    "created_at": {"type":"string","example": "2021-02-28T15:00:12.000Z"}
+                }
+              }
+            },
+            "400": {
+              "description": "A object with the error message.",
+              "schema": {
+                  "type": "object",
+                  "properties": {
+                      "message": {"type":"string", "example":"User does not exists!"}
+                  }
+              }
+            }
+          }
+        }
+      },
+      "/nps/{survey_id}": {
+        "get": {
+          "summary": "Calculate the NPS of the survey.",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "survey_id",
+              "description": "The survey ID.",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "A object with the NPS data.",
+              "schema": {
+                "type": "object",
+                "properties": {
+                    "detractor": {"type": "number", "example":"1"},
+                    "promoters": {"type": "number", "example":"3"},
+                    "passive": {"type": "number", "example":"0"},
+                    "totalAnswers": {"type": "number", "example":"4"},
+                    "nps": {"type": "number", "example":"50"}
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }

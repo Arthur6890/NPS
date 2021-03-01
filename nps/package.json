@@ -1,0 +1,39 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "author": "Arthur P Ramos Amaral <arthur.ramos.amaral@hotmail.com> (https://www.linkedin.com/in/arthur-ramos-b09093177/)",
+  "scripts": {
+    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
+    "start": "npx ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
+    "typeorm": "ts-node-dev node_modules/typeorm/cli.js",
+    "test:coverage": "NODE_ENV=test nyc jest -i --coverage --reporter=html",
+    "test": "NODE_ENV=test jest -i"
+  },
+  "dependencies": {
+    "@types/nodemailer": "^6.4.0",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "handlebars": "^4.7.7",
+    "nodemailer": "^6.5.0",
+    "nyc": "^15.1.0",
+    "reflect-metadata": "^0.1.13",
+    "sqlite3": "^5.0.2",
+    "swagger-ui-express": "^4.1.6",
+    "typeorm": "^0.2.31",
+    "uuid": "^8.3.2",
+    "yup": "^0.32.9"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.11",
+    "@types/jest": "^26.0.20",
+    "@types/supertest": "^2.0.10",
+    "@types/uuid": "^8.3.0",
+    "jest": "^26.6.3",
+    "supertest": "^6.1.3",
+    "ts-jest": "^26.5.2",
+    "ts-node-dev": "^1.1.6",
+    "typescript": "^4.2.2"
+  }
+}
